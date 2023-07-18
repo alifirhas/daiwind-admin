@@ -32,14 +32,14 @@ code blocks for commands
 Any advice for common problems or issues?
 
 ```bash
-command to run if program contains helper info
+command to run the program contains helper info
 ```
 
 ## Version History -->
 
 ## License
 
-This project is licensed under the [NAME HERE] License - see the LICENSE.md file for details
+This project is licensed under the MIT License - see the LICENSE.md file for details
 
 ## Credit
 
