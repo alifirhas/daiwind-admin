@@ -34,13 +34,13 @@ export default function DashboardLayout() {
 				<div
 					className={`h-full w-full ${
 						closeSideBar ? "-ml-80 lg:ml-0" : "ml-0 lg:-ml-80"
-					} transition-all duration-150 ease-in`}
+					} transition-all duration-150 ease-in flex flex-col`}
 				>
 					{/* Top Navigation Bar */}
-					<TopNavigationBar onClickLogo={handleCloseSideBar} />
+					<TopNavigationBar onClickLogo={handleCloseSideBar} closeSideBar={closeSideBar}/>
 
 					{/* Main Content */}
-					<div className="p-4">
+					<div className="p-4 bg-base-200 h-full">
 						{/* This is main content */}
 						<Outlet />
 					</div>

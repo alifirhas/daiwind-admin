@@ -10,7 +10,7 @@ import ProtectedMiddleware from "../middleware/ProtectedMiddleware";
 export default function Web() {
 	return (
 		<Routes>
-			<Route path="/" element={<Navigate to="/app/welcome" />} />
+			<Route path="/" element={<Navigate to="/app/dashboard" />} />
 
 			{/* Auth Group */}
 			<Route path="/auth/*" element={<AuthRoute />} />
@@ -18,6 +18,7 @@ export default function Web() {
 			{/* Dashboard */}
 			<Route path="/app" element={<DashboardLayout />}>
 				<Route path="welcome" element={<Welcome />} />
+				<Route path="dashboard" element={<Dashboard />} />
 			</Route>
 
 			{/* Exception */}
