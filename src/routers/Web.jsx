@@ -1,7 +1,8 @@
 import { Navigate, Route, Routes } from "react-router-dom";
+import DashboardLayout from "../layouts/DashboardLayout";
+import AuthRoute from "./AuthRoute";
 import Welcome from "../pages/welcome/Welcome";
 import Dashboard from "../pages/dashboard/Dashboard";
-import AuthRoute from "./AuthRoute";
 import UnAuthenticated from "../pages/UnAuthenticated";
 import NotFound from "../pages/NotFound";
 import ProtectedMiddleware from "../middleware/ProtectedMiddleware";
@@ -15,16 +16,8 @@ export default function Web() {
 			<Route path="/auth/*" element={<AuthRoute />} />
 
 			{/* Dashboard */}
-			<Route path="/app">
+			<Route path="/app" element={<DashboardLayout />}>
 				<Route path="welcome" element={<Welcome />} />
-				<Route
-					path="private"
-					element={
-						<ProtectedMiddleware>
-							<Dashboard />
-						</ProtectedMiddleware>
-					}
-				/>
 			</Route>
 
 			{/* Exception */}
