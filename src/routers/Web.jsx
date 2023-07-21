@@ -1,17 +1,12 @@
-import { Navigate, Outlet, Route, Routes, useNavigate } from "react-router-dom";
-import Welcome from "../features/welcome/Welcome";
-import Dashboard from "../features/dashboard/Dashboard";
+import { Navigate, Route, Routes } from "react-router-dom";
+import Welcome from "../pages/welcome/Welcome";
+import Dashboard from "../pages/dashboard/Dashboard";
 import AuthRoute from "./AuthRoute";
-import UnAuthenticated from "../features/UnAuthenticated";
-import NotFound from "../features/NotFound";
+import UnAuthenticated from "../pages/UnAuthenticated";
+import NotFound from "../pages/NotFound";
+import ProtectedMiddleware from "../middleware/ProtectedMiddleware";
 
 export default function Web() {
-	const ProtectedRoute = () => {
-		const isAuth = false;
-
-		return isAuth ? <Outlet /> : <Navigate to="/auth/login" />;
-	};
-
 	return (
 		<Routes>
 			<Route path="/" element={<Navigate to="/app/welcome" />} />
@@ -25,9 +20,9 @@ export default function Web() {
 				<Route
 					path="private"
 					element={
-						<ProtectedRoute>
+						<ProtectedMiddleware>
 							<Dashboard />
-						</ProtectedRoute>
+						</ProtectedMiddleware>
 					}
 				/>
 			</Route>
