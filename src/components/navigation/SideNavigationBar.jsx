@@ -2,29 +2,44 @@ import logo from "../../assets/icons/dot.svg";
 import SideNavigationItem from "./SideNavigationItem";
 
 export default function SideNavigationBar({ closeSideBar }) {
+	const navigationItems = [
+		{
+			id: crypto.randomUUID(),
+			to: "/app/dashboard",
+			title: "Dashboard",
+			iconTag: "heroicons:home",
+		},
+		{
+			id: crypto.randomUUID(),
+			to: "/app/welcome",
+			title: "Welcome",
+			iconTag: "heroicons:home",
+		},
+	];
+
 	return (
-		<div
-			className={`w-80 h-ful bg-base-100 ${
-				closeSideBar
-					? "-translate-x-full lg:translate-x-0"
-					: "translate-x-0 lg:-translate-x-full"
-			} transition-transform duration-150 ease-in shadow-xl flex flex-col`}
-		>
-			{/* Logo dan tombol close */}
-			<div className="flex flex-row justify-between py-2 px-2">
+		<ul className="h-full w-80 bg-base-100 text-base-content">
+			{/* <!-- Sidebar content here --> */}
+			<li className="flex flex-row justify-between py-2 px-2 hover:bg-base-200 mb-2">
 				<a className="text-xl flex content-center items-center gap-2 h-12 py-2 pl-4">
 					{/* Logo */}
 					<img src={logo} alt="" className="h-8 w-8" />
 					{/* Project name*/}
 					<div>DaiWind</div>
 				</a>
-			</div>
+			</li>
 
-			{/* Menus */}
-			<div className="flex flex-col">
-				{/* item menu */}
-				<SideNavigationItem to="/app/dashboard" title="Dashboard" iconTag="heroicons:home" />
-			</div>
-		</div>
+			{navigationItems.map((navItem) => {
+				return (
+					<li key={navItem.id}>
+						<SideNavigationItem
+							to={navItem.to}
+							title={navItem.title}
+							iconTag={navItem.iconTag}
+						/>
+					</li>
+				);
+			})}
+		</ul>
 	);
 }

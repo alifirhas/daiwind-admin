@@ -4,46 +4,35 @@ import { useEffect, useState } from "react";
 import SideNavigationBar from "../components/navigation/SideNavigationBar";
 
 export default function DashboardLayout() {
-	// Tutup side navbar
-	const [closeSideBar, setCloseSideBar] = useState(() => {
-		const localValue = localStorage.getItem("CLOSESIDEBAR")
+	const [pageTitle, setPageTitle] = useState("Rumah");
 
-		if (localValue == null) return false
-
-		return localValue === 'true'
-	});
-
-	useEffect(() => {
-		// Simpan state close side bar ke local storage
-		localStorage.setItem("CLOSESIDEBAR", closeSideBar.toString());
-	}, [closeSideBar]);
-
-	// Fungsi untuk buka tutup side navbar
-	const handleCloseSideBar = () => {
-		setCloseSideBar((state) => !state);
-		console.log(closeSideBar);
-	};
+	function handlePageTitleChange(newTitle) {
+		setPageTitle((currentPageTitle) => {
+			return newTitle;
+		});
+	}
 
 	return (
 		<>
-			<div className="flex flex-row h-screen">
-				{/* Side Navigation bar */}
-				<SideNavigationBar closeSideBar={closeSideBar} />
+			<div className="drawer lg:drawer-open">
+				<div className="drawer-content flex flex-col h-screen">
+					{/* Top navigation bar*/}
+					<TopNavigationBar pageTitle={pageTitle} />
 
-				{/* Content */}
-				<div
-					className={`h-full w-full ${
-						closeSideBar ? "-ml-80 lg:ml-0" : "ml-0 lg:-ml-80"
-					} transition-all duration-150 ease-in flex flex-col`}
-				>
-					{/* Top Navigation Bar */}
-					<TopNavigationBar onClickLogo={handleCloseSideBar} closeSideBar={closeSideBar}/>
-
-					{/* Main Content */}
-					<div className="p-4 bg-base-200 h-full">
-						{/* This is main content */}
-						<Outlet />
+					{/* <!-- Page content here --> */}
+					<div className="p-4 w-full h-full bg-base-200 overflow-auto">
+						<Outlet context={[handlePageTitleChange]} />
 					</div>
+				</div>
+
+				{/* sidebar checkbox controller */}
+				<input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
+
+				{/* Left side navigation bar */}
+				<div className="drawer-side z-20">
+					<label htmlFor="my-drawer-2" className="drawer-overlay"></label>
+					{/* <!-- Sidebar content here --> */}
+					<SideNavigationBar />
 				</div>
 			</div>
 		</>

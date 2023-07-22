@@ -19,6 +19,7 @@ export default function Web() {
 			<Route path="/app" element={<DashboardLayout />}>
 				<Route path="welcome" element={<Welcome />} />
 				<Route path="dashboard" element={<Dashboard />} />
+				<Route path="welcome" element={<Welcome />} />
 			</Route>
 
 			{/* Exception */}
