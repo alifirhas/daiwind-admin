@@ -1,5 +1,5 @@
 import { Icon } from "@iconify/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function TopNavigationBar({ pageTitle = "" }) {
 	const [notifications, setNotifications] = useState([
@@ -17,7 +17,26 @@ export default function TopNavigationBar({ pageTitle = "" }) {
 		},
 	]);
 
-	const [profilePic, setProfilePic] = useState("https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg")
+	const [themeIcon, setThemeIcon] = useState(() => {
+		const localThemeIcon = localStorage.getItem("CURRENTTHEMEICON");
+		if (localThemeIcon == null) return "heroicons:sun";
+
+		return localThemeIcon;
+	});
+
+	const [profilePic, setProfilePic] = useState(
+		"https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"
+	);
+
+	useEffect(() => {
+		localStorage.setItem("CURRENTTHEMEICON", themeIcon);
+	}, [themeIcon]);
+
+	function changeThemeIcon(iconTag) {
+		setThemeIcon((currentThemeIcon) => {
+			return iconTag;
+		});
+	}
 
 	function deleteNotification(id) {
 		setNotifications((currentNotifications) => {
@@ -43,6 +62,7 @@ export default function TopNavigationBar({ pageTitle = "" }) {
 						/>
 					</label>
 				</div>
+
 				{/* Title */}
 				<div className="flex-1">
 					<a className="btn btn-ghost text-xl normal-case">{pageTitle}</a>
@@ -50,6 +70,46 @@ export default function TopNavigationBar({ pageTitle = "" }) {
 
 				{/* Right Section */}
 				<div className="flex-none">
+					<div className="dropdown dropdown-end">
+						<label tabIndex={0} className="btn btn-ghost btn-circle">
+							<Icon icon={themeIcon} width={20} height={20} />
+						</label>
+						<ul
+							tabIndex={0}
+							className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
+						>
+							<li>
+								<button
+									data-set-theme="light"
+									data-act-class="ACTIVECLASS"
+									onClick={() => setThemeIcon("heroicons:sun")}
+								>
+									<Icon icon="heroicons:sun" />
+									Light
+								</button>
+							</li>
+							<li>
+								<button
+									data-set-theme="dark"
+									data-act-class="ACTIVECLASS"
+									onClick={() => setThemeIcon("heroicons:moon")}
+								>
+									<Icon icon="heroicons:moon" />
+									Dark
+								</button>
+							</li>
+							<li>
+								<button
+									data-set-theme="cupcake"
+									data-act-class="ACTIVECLASS"
+									onClick={() => setThemeIcon("mingcute:cupcake-line")}
+								>
+									<Icon icon="mingcute:cupcake-line" />
+									Cupcake
+								</button>
+							</li>
+						</ul>
+					</div>
 					<div className="dropdown dropdown-end">
 						<label tabIndex={0} className="btn btn-ghost btn-circle">
 							<div className="indicator">
